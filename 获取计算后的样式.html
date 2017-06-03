@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#box {
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				left: 50px
+			}
+		</style>
+	</head>
+	<body>
+		<!--<div id="box" style="left: 50px"></div>-->
+		<div id="box"></div>
+		<script type="text/javascript">
+			/*var obj = {};
+			*/
+			/*logStyle("box","left");
+			function logStyle(id,attr){
+				var box = document.getElementById(id);
+			//style[attr]获取style中的left属性	
+				console.log(box,style[attr]);
+			}*/
+			
+			
+			
+//window.getComputerStyle(a,b);  h  获取计算后的样式,a是对象吧是伪数组
+			var box = document.getElementById("box");
+			console.log(window.getComputedStyle(box,null).left);
+			
+	//IE678
+		box.currentstyle.left;
+		
+//获取样式的兼容代码,obj对象  attr样式 //null伪数组
+	function getStyle(obj,attr){
+		if(window.getComputedStyle){
+			return window.getComputedStyle(obj,null)[attr];
+		}else{
+			return obj.current[attr];
+		}
+	}
+		</script>
+	</body>
+</html>

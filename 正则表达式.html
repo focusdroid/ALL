@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+		//用构造函数形式创建对象
+			var regEx = RegExp(/\d/);
+			//console.log(regEx.test("1"));
+			//console.log(regEx.test("a1"));
+		//用直接量的形式；来创建
+			var reg = /\d/;//非严格模式下只要有需求的都返回true
+			console.log(/\d/.test("2222"));//true
+			console.log(/\d/.test("s"));//false
+			console.log(/\d/.test("s2222"));//true
+			console.log(reg.test("aaa2aaa"));//true
+			
+			
+		</script>
+		
+	</body>
+</html>

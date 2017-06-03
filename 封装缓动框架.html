@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#box {
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				position: absolute;
+				/*border-radius: 40;*/
+			}
+		</style>
+	</head>
+	<body>
+		<button id="btn">按钮</button>
+		<div id="box"></div>
+		<script type="text/javascript">
+			var timer = null;
+			var btn = document.getElementById("btn");
+			var box = document.getElementById("box");
+			btn.onclick = function(){
+				//animate(box,"border-radius",40);//中间的值可以是 Height width
+				//改变传参方式
+				animate(box,{"height":400,"width": 400,"left":400,"top":400 });
+			};
+		
+		
+		//可以改变任意带px单位的属性。
+		// 把   任意对象   的   任意数值属性   改变为   任意目标值    attr:属性  
+			function animate(obj,json){//json{attr:target}
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					//先假设这一次执行完，所有的属性都达到目标了
+					var flag = true;
+					for(var k in json){//json{attr:target} 属性名：属性值 k:json[k]
+						var leader = parseInt(getStyle(obj,k)) || 0;
+						var target = json[k];//当前属性的目标值
+						var step = (target - leader) / 10;
+						step = step > 0?Math.ceil(step):Math.floor(step);
+						leader = leader + step;
+						obj.style[k] = leader + "px";
+						/*if(target === leader){
+							clearInterval(obj.timer);
+						}*/
+						if(target != leader){
+							flag = false;//告诉标记，当前还没到达
+						}
+					}
+					if(flag){
+						clearInterval(obj.timer);
+					}
+				},15);
+			}
+		//获取样式的兼容代码,obj对象  attr样式 //null伪数组
+			function getStyle(obj,attr){
+				if(window.getComputedStyle){
+					return window.getComputedStyle(obj,null)[attr];
+				}else{
+					return obj.current[attr];
+				}
+			}
+		
+		
+		
+		
+		
+		
+			/*//封装缓动动画
+			function animate(obj,target){
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					var leader = obj.offsetLeft;
+					var step = (target - leader) / 10;
+					step = step > 0?Math.ceil(step):Math.floor(step);
+					leader = leader + step;
+					obj.style.left = leader + "px";
+					if(target === leader){
+						clearInterval(obj.timer);
+					}
+				},15);
+			}*/
+			
+		/*	//可以改变任意带px单位的属性。
+		// 把   任意对象   的   任意数值属性   改变为   任意目标值    attr:属性  
+			function animate(obj,attr,target){
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+				//	var leader = obj.offsetLeft;
+				//获取任意属性的当前值
+					//返回时字符串，parseInt,,防止设置属性为auto（||0）
+					var leader = parseInt(getStyle(obj,attr)) || 0;
+					var step = (target - leader) / 10;
+					step = step > 0?Math.ceil(step):Math.floor(step);
+					leader = leader + step;
+					obj.style[attr] = leader + "px";
+					if(target === leader){
+						clearInterval(obj.timer);
+					}
+				},15);
+			}
+		//获取样式的兼容代码,obj对象  attr样式 //null伪数组
+			function getStyle(obj,attr){
+				if(window.getComputedStyle){
+					return window.getComputedStyle(obj,null)[attr];
+				}else{
+					return obj.current[attr];
+				}
+			}*/
+			
+			
+			
+			/*//可以改变任意带px单位的属性。
+		// 把   任意对象   的   任意数值属性   改变为   任意目标值    attr:属性  
+			function animate(obj,json){//json{attr:target}
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					for(var k in json){//json{attr:target} 属性名：属性值 k:json[k]
+						var leader = parseInt(getStyle(obj,k)) || 0;
+						var target = json[k];//当前属性的目标值
+						var step = (target - leader) / 10;
+						step = step > 0?Math.ceil(step):Math.floor(step);
+						leader = leader + step;
+						obj.style[k] = leader + "px";
+						if(target === leader){
+							clearInterval(obj.timer);
+						}
+					}
+				},15);
+			}
+		//获取样式的兼容代码,obj对象  attr样式 //null伪数组
+			function getStyle(obj,attr){
+				if(window.getComputedStyle){
+					return window.getComputedStyle(obj,null)[attr];
+				}else{
+					return obj.current[attr];
+				}
+			}*/
+		</script>
+	</body>
+</html>

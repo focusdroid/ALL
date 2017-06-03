@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			#box {
+				width: 100px;
+				height: 100px;
+				background-color: red;
+				/*opacity: 0.3;*/
+			}
+		</style>
+	</head>
+	<body>
+		<button id="btn">开始</button>
+		<div id="box"></div>
+		<script type="text/javascript">
+		var btn = document.getElementById("btn");
+		var box = document.getElementById("box");
+		
+		/*btn.onclick = function(){
+			animate(box,{"opacity":0});
+		};*/
+		btn.onclick = function(){
+			animate(box,{"zIndex":5});
+		};
+		
+		
+		
+		//可以改变任意带px单位的属性。
+		// 把   任意对象   的   任意数值属性   改变为   任意目标值    attr:属性  
+			function animate(obj,json,fn){//json{attr:target}
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					//先假设这一次执行完，所有的属性都达到目标了
+					var flag = true;
+					for(var k in json){//json{attr:target} 属性名：属性值 k:json[k]
+						if(k === "opacity"){//opacity 要特殊处理
+				//opacity 没有单位，参与运算自动转换成数值，所以不用parseInt
+				//取值范围：先扩大，，再除去
+							var leader = getStyle(obj,k)*100;
+							var target = json[k]*100;//当前属性的目标值
+							var step = (target - leader) / 10;
+							step = step > 0?Math.ceil(step):Math.floor(step);
+							leader = leader + step;
+							obj.style[k] = leader / 100;  
+							//opacity没有单位
+							/*if(target === leader){
+								clearInterval(obj.timer);
+							}*/
+						}
+						else if(k === "zIndex"){
+							obj.style.zIndex = json[k];//层级不需要渐变,直接设置
+						}
+						else{
+							var leader = parseInt(getStyle(obj,k)) || 0;
+							var target = json[k];//当前属性的目标值
+							var step = (target - leader) / 10;
+							step = step > 0?Math.ceil(step):Math.floor(step);
+							leader = leader + step;
+							obj.style[k] = leader + "px";
+							/*if(target === leader){
+								clearInterval(obj.timer);
+							}*/
+						}
+							
+						if(target != leader){
+							flag = false;//告诉标记，当前还没到达
+						}
+					}
+					if(flag){
+						clearInterval(obj.timer);
+						//fn();
+						if(fn){
+							fn();
+						}
+					}
+				},15);
+			}
+		//获取样式的兼容代码,obj对象  attr样式 //null伪数组
+			function getStyle(obj,attr){
+				if(window.getComputedStyle){
+					return window.getComputedStyle(obj,null)[attr];
+				}else{
+					return obj.current[attr];
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			///^[ab|cd|ef]/.test("bc")
+			//console.log(/ab|cd|ef/.test("bc"));
+			//console.log(/[a bc]/.test("ab"));//true
+			console.log(/abcd|ef/.test("abcd"));//true  匹配的方式是在“|”的前面的内容或者后边的内容
+			console.log(/abcd|ef/.test("d|ef"));//true
+			//console.log(/[ab|cd|ef]/.test("bc"));//true
+		</script>
+	</body>
+</html>

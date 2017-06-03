@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<button id="btn" >点击按钮</button>
+<script>
+	var btn = document.getElementById("btn");
+	var head = function(){
+		console.log("head事件处理");
+	};
+	btn.addEventListener("click",head,false);
+	btn.removeEventListener("click",head,false);
+</script>
+</body>
+</html>
